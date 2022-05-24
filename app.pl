@@ -33,7 +33,7 @@ situacao(Paciente, leve) :-
 
 :- dynamic parametro/3.
 
-covid :- carrega('covid.bd'),
+laudo :- carrega('laudo.bd'),
     format('~n ======= Laudo covid ======~n~n'),
     repeat,
     pergunta(Nome),
@@ -41,7 +41,7 @@ covid :- carrega('covid.bd'),
     continua(R),
     R=n,
     !,
-    salva(parametro, 'covid.bd').
+    salva(parametro, 'laudo.bd').
 
 carrega(A) :-
     exists_file(A),
@@ -80,7 +80,7 @@ pergunta(Nome) :-
 responde(Nome) :-
     situacao(Nome, X),
     !,
-    format('~n Situação do paciente: ~w  ~w.~n', [Nome, X]).
+    format('~n Nome e situação ~w  ~w.~n', [Nome, X]).
 
 continua(R) :-
     format('~nFazer outro teste?(s/n)'),
