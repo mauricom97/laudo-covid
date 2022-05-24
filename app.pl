@@ -1,5 +1,3 @@
-parametro(mauricio, temperatura, 38).
-
 situacao(Paciente, gravissimo) :-
     parametro(Paciente, frequenciaRespiratoria, Valor), Valor > 30;
     parametro(Paciente, paSistolica, Valor), Valor < 90;
@@ -36,7 +34,7 @@ situacao(Paciente, leve) :-
 :- dynamic parametro/3.
 
 covid :- carrega('covid.bd'),
-    format('~n *** Estado de paciente ***~n~n'),
+    format('~n ======= Laudo covid ======~n~n'),
     repeat,
     pergunta(Nome),
     responde(Nome),
@@ -60,16 +58,16 @@ pergunta(Nome) :-
     format('~nFrequencia cardiaca:  '),
     gets(FreqCard),
     asserta(parametro(Nome, frequenciaCardiaca, FreqCard)),
-    format('~nFrequência respiratória:  '),
+    format('~nFrequencia respiratoria:  '),
     gets(FreqResp),
     asserta(parametro(Nome, frequenciaRespiratoria, FreqResp)),
-    format('~nPA Sistólica:  '),
+    format('~nPA Sistolica:  '),
     gets(PaSist),
     asserta(parametro(Nome, paSistolica, PaSist)),
-    format('~nQual a saturação?  '),
+    format('~nQual a saturacao?  '),
     gets(Saturacao),
     asserta(parametro(Nome, saturacao, Saturacao)),
-    format('~nTem dispnéia?(s/n)  '),
+    format('~nTem dispneia?(s/n)  '),
     gets(Dispneia),
     asserta(parametro(Nome, dispneia, Dispneia)),
     format('~nIdade:  '),
@@ -82,7 +80,7 @@ pergunta(Nome) :-
 responde(Nome) :-
     situacao(Nome, X),
     !,
-    format('~n Situação do paciente ~w é ~w.~n', [Nome, X]).
+    format('~n Situação do paciente: ~w  ~w.~n', [Nome, X]).
 
 continua(R) :-
     format('~nFazer outro teste?(s/n)'),
