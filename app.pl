@@ -1,31 +1,31 @@
-parametro(mauricio, temp, 38).
+parametro(mauricio, temperatura, 38).
 
 situacao(Paciente, gravissimo) :-
-    parametro(Paciente, freqresp, Valor), Valor > 30;
-    parametro(Paciente, pasist, Valor), Valor < 90;
-    parametro(Paciente, sao2, Valor), Valor < 95;
+    parametro(Paciente, frequenciaRespiratoria, Valor), Valor > 30;
+    parametro(Paciente, paSistolica, Valor), Valor < 90;
+    parametro(Paciente, saturacao, Valor), Valor < 95;
     parametro(Paciente, dispneia, Valor), (Valor="s";Valor="S").
 
 situacao(Paciente, grave) :-
-    parametro(Paciente, temp, Valor), Valor>=39;
+    parametro(Paciente, temperatura, Valor), Valor>=39;
     parametro(Paciente, idade, Valor), Valor>=80;
-    parametro(Paciente, pasist, Valor), Valor>=90,Valor=<100;
+    parametro(Paciente, paSistolica, Valor), Valor>=90,Valor=<100;
     parametro(Paciente, comorbidades, Valor), Valor>=2.
 
 situacao(Paciente, medio) :-
-    parametro(Paciente, temp, Valor), Valor=<35;
-    parametro(Paciente, temp, Valor), Valor>=37, Valor=<39;
-    parametro(Paciente, freqcard, Valor), Valor>=100;
-    parametro(Paciente, freqresp, Valor), Valor>=19, Valor=<30;
+    parametro(Paciente, temperatura, Valor), Valor=<35;
+    parametro(Paciente, temperatura, Valor), Valor>=37, Valor=<39;
+    parametro(Paciente, frequenciaCardiaca, Valor), Valor>=100;
+    parametro(Paciente, frequenciaRespiratoria, Valor), Valor>=19, Valor=<30;
     parametro(Paciente, idade, Valor), Valor>=60, Valor=<79;
     parametro(Paciente, comorbidades, Valor), Valor=:=1.
 
 situacao(Paciente, leve) :-
-    parametro(Paciente, temp, Valor), Valor>35, Valor<37;
-    parametro(Paciente, freqcard, Valor), Valor<100;
-    parametro(Paciente, freqresp, Valor), Valor=<18;
-    parametro(Paciente, pasist, Valor), Valor>100;
-    parametro(Paciente, sao2, Valor), Valor>=95;
+    parametro(Paciente, temperatura, Valor), Valor>35, Valor<37;
+    parametro(Paciente, frequenciaCardiaca, Valor), Valor<100;
+    parametro(Paciente, frequenciaRespiratoria, Valor), Valor=<18;
+    parametro(Paciente, paSistolica, Valor), Valor>100;
+    parametro(Paciente, saturacao, Valor), Valor>=95;
     parametro(Paciente, dispneia, Valor), (Valor="n"; Valor="N");
     parametro(Paciente, idade, Valor), Valor<60;
     parametro(Paciente, comorbidades, Valor), Valor=:=0.
@@ -52,40 +52,40 @@ carrega(A) :-
     true.
 
 pergunta(Nome) :-
-    format('~nQual o nome do paciente?  '),
+    format('~nInforme o nome do paciente:  '),
     gets(Nome),
-    format('~nQual a temperatura?  '),
+    format('~nTemperatura:  '),
     gets(Temperatura),
-    asserta(parametro(Nome, temp, Temperatura)),
-    format('~nQual a frequência cardíaca?  '),
+    asserta(parametro(Nome, temperatura, Temperatura)),
+    format('~nFrequencia cardiaca:  '),
     gets(FreqCard),
-    asserta(parametro(Nome, freqcard, FreqCard)),
-    format('~nQual a frequência respiratória?  '),
+    asserta(parametro(Nome, frequenciaCardiaca, FreqCard)),
+    format('~nFrequência respiratória:  '),
     gets(FreqResp),
-    asserta(parametro(Nome, freqresp, FreqResp)),
-    format('~nQual a PA Sistólica?  '),
+    asserta(parametro(Nome, frequenciaRespiratoria, FreqResp)),
+    format('~nPA Sistólica:  '),
     gets(PaSist),
-    asserta(parametro(Nome, pasist, PaSist)),
+    asserta(parametro(Nome, paSistolica, PaSist)),
     format('~nQual a saturação?  '),
     gets(Saturacao),
-    asserta(parametro(Nome, sao2, Saturacao)),
+    asserta(parametro(Nome, saturacao, Saturacao)),
     format('~nTem dispnéia?(s/n)  '),
     gets(Dispneia),
     asserta(parametro(Nome, dispneia, Dispneia)),
-    format('~nQual a idade?  '),
+    format('~nIdade:  '),
     gets(Idade),
     asserta(parametro(Nome, idade, Idade)),
-    format('~nPossui quantas comorbidades?  '),
+    format('~nQuantas comorbidades?  '),
     gets(Comorbidades),
     asserta(parametro(Nome, comorbidades, Comorbidades)).
 
 responde(Nome) :-
     situacao(Nome, X),
     !,
-    format('~n A situação de ~w é ~w.~n', [Nome, X]).
+    format('~n Situação do paciente ~w é ~w.~n', [Nome, X]).
 
 continua(R) :-
-    format('~nDeseja informar outro paciente?(s/n)'),
+    format('~nFazer outro teste?(s/n)'),
     get_char(R),
     get_char('\n').
 
